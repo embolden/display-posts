@@ -5,7 +5,7 @@
  * Description: A shortcode to display posts
  * Author: Integrity
  * Author URI: http://www.integritystl.com
- * Version: 1.0.1
+ * Version: 1.0.2
  */
 
 /**
@@ -26,13 +26,25 @@ class Display_Posts {
 
 		$paged = ( get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1 );
 
+		$tags = get_tags();
+
+		if( $tag ) {
+			foreach( $tags as $t ) {
+				if( $tag == $t->name ) {
+					$tag = $t->term_id;
+					break;
+				}
+			}
+		}
+
 		$query_args = array(
 			'post_type'      => $post_type,
 			'posts_per_page' => $per_page,
 			'paged'          => $paged,
-			'tag'            => $tag,
+			'tag__in'        => $tag,
 		);
 		$query = new WP_Query( $query_args );
+
 		$output = apply_filters( 'display_posts_before_posts', '' );
 		while( $query->have_posts() ) : $query->the_post();
 			$output .= apply_filters( 'display_posts_output_post', $value = $this->output_post(), $query );
