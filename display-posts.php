@@ -19,7 +19,7 @@ class Display_Posts {
 	function output_shortcode( $atts ) {
 		$defaults = array(
 			'post_type'      => '',
-			'per_page'       => 10,
+			'per_page'       => -1,
 			'category'       => '',
 		);
 		extract( shortcode_atts( $defaults, $atts, 'display_posts' ) );
