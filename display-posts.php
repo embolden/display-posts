@@ -5,7 +5,7 @@
  * Description: A shortcode to display posts
  * Author: Integrity
  * Author URI: http://www.integritystl.com
- * Version: 1.0.2
+ * Version: 1.0.3
  */
 
 /**
@@ -100,7 +100,14 @@ class Display_Posts {
 
 		if( empty( $links ) )
 			return;
-
+		$output = apply_filters( 'display_posts_output_pagination', $value = $this->output_pagination($links), $links);
+		return $output;
+	}
+	
+	/**
+	 *
+	 */
+	private function output_pagination($links){
 		ob_start(); ?>
 		<div class="pagination">
 			<ul>
